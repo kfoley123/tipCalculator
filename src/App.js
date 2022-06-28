@@ -1,8 +1,13 @@
 import "./App.css";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 function App() {
     const [billAmount, setBillAmount] = useState(0);
+    const [tipAmount, setTipAmount] = useState(0);
+    const [totalWithTip, setTotalWithTip] = useState(0);
+    const [costPerPerson, setCostPerPerson] = useState(0);
+    const tip = 10;
+    const people = 2;
 
     function getTipAmount(bill, tip) {
         return parseInt(bill) * (tip / 100);
@@ -12,6 +17,12 @@ function App() {
         return getTipAmount(bill, tip) + parseInt(bill);
     }
 
+    useEffect(() => {
+        setTipAmount(getTipAmount(billAmount, tip));
+        setTotalWithTip(getTotalwTip(billAmount, tip));
+        setCostPerPerson(totalWithTip / people);
+    }, [billAmount]);
+
     return (
         <div className="calculatorContainer">
             <div className="calculatorFunctions">
@@ -19,14 +30,14 @@ function App() {
 
                 <input
                     type="text"
-                    placeholder="$0.00"
+                    placeholder="0.00"
                     onChange={(event) => setBillAmount(event.target.value)}
                 />
                 <div className="tipTotals">
-                    <p>Tip Amount:$ {getTipAmount(billAmount, 15)}</p>
+                    <p>Tip Amount:$ {tipAmount}</p>
                     <p>
                         Total with Tip:$
-                        {getTotalwTip(billAmount, 15)}
+                        {totalWithTip}
                     </p>
                 </div>
 
@@ -56,8 +67,7 @@ function App() {
             </div>
             <div className="finalOutput">
                 <p>
-                    <span>${getTotalwTip(billAmount, 15) / 2}</span> / per
-                    person
+                    <span>${costPerPerson}</span> / per person
                 </p>
             </div>
         </div>
