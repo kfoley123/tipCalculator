@@ -1,24 +1,49 @@
 .calculatorContainer {
     width: fit-content;
-    background-color: rgb(7, 35, 121);
+    background-color: rgb(3, 3, 90);
     border-radius: 0.75rem;
     border: solid 7px rgb(3, 3, 90);
     margin: 50%;
     text-align: center;
+    font-size: larger;
 }
 
 .calculatorFunctions {
-    width: 200px;
+    width: 400px;
     background-color: white;
     padding: 30px;
 }
 
-.tipOptionContainer {
+.calculatorFunctions > input {
+    height: 50px;
+    width: 400px;
+    font-size: xx-large;
+    text-align: right;
+    padding: 10px;
 }
 
 .tipButtons {
     display: flex;
     justify-content: space-evenly;
+}
+
+.tipButtons > button {
+    font-size: x-large;
+    width: 120px;
+    border-radius: 5px;
+    border: none;
+    background-color: rgb(205, 202, 198);
+    padding: 8px;
+}
+
+.customTipButton {
+    width: 360px;
+    height: 50px;
+    font-size: x-large;
+    margin-top: 10px;
+    border-radius: 5px;
+    border: none;
+    background-color: rgb(205, 202, 198);
 }
 
 .splitContainer {
@@ -27,11 +52,28 @@
     justify-content: space-between;
     margin: auto;
     padding-right: 6px;
+    list-style: none;
+}
+
+.splitContainer > li {
+    border: solid rgb(3, 3, 90);
+    border-radius: 100%;
+    padding: 12px;
+    margin-right: 15px;
 }
 
 .finalOutput {
     width: fit-content;
-
     padding: 20px;
-    margin-left: 35px;
+    margin-left: 20%;
+    text-align: center;
+}
+
+.finalOutput > p {
+    color: white;
+}
+
+.finalOutput > p span {
+    color: rgb(136, 220, 248);
+    font-size: 50px;
 }

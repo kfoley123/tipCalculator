@@ -6,10 +6,10 @@ function App() {
             <div className="calculatorFunctions">
                 <p>Bill Amount</p>
 
-                <input type="text" placeholder="0.00" />
+                <input type="text" placeholder="$0.00" />
 
                 <div>
-                    <div className="tipOptionContainer">
+                    <div>
                         <p>Tip Amount</p>
                         <div className="tipButtons">
                             <button>10%</button>
@@ -18,22 +18,24 @@ function App() {
                         </div>
                     </div>
 
-                    <button>Custom</button>
+                    <button className="customTipButton">Custom</button>
                 </div>
 
                 <p>How many people are paying?</p>
 
                 <ul className="splitContainer">
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                    <li></li>
+                    <li>1</li>
+                    <li>2</li>
+                    <li>3</li>
+                    <li>4</li>
+                    <li>5</li>
+                    <li>6</li>
                 </ul>
             </div>
             <div className="finalOutput">
-                <input type="text" placeholder="0.00" />
+                <p>
+                    <span>$0.00</span> / per person
+                </p>
             </div>
         </div>
     );
