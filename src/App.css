@@ -36,7 +36,6 @@
     font-size: x-large;
     width: 120px;
     border-radius: 5px;
-
     background-color: rgb(205, 202, 198);
     padding: 8px;
 }
@@ -51,8 +50,11 @@
     font-size: x-large;
     margin-top: 10px;
     border-radius: 5px;
-
     background-color: rgb(205, 202, 198);
+}
+
+.customTipButton:hover {
+    background-color: rgb(136, 220, 248);
 }
 
 .splitContainer {
