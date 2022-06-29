@@ -32,7 +32,14 @@ function App() {
         setTotalWithTip(getTotalwTip(billAmount, tip));
         let CostPerPersonFixed = totalWithTip / numberOfPeople;
         setCostPerPerson(CostPerPersonFixed.toFixed(2));
-    }, [billAmount, tipAmount, totalWithTip, costPerPerson, numberOfPeople]);
+    }, [
+        billAmount,
+        tipAmount,
+        totalWithTip,
+        costPerPerson,
+        numberOfPeople,
+        tip,
+    ]);
 
     return (
         <div className="calculatorContainer">
