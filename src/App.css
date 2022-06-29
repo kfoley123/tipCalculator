@@ -52,6 +52,7 @@
 }
 
 .splitContainer {
+    border: none;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -61,10 +62,17 @@
 }
 
 .splitContainer > li {
-    border: solid rgb(3, 3, 90);
+    background-color: rgb(202, 202, 246);
     border-radius: 100%;
     padding: 12px;
     margin-right: 15px;
+}
+
+.splitContainer > li:hover {
+    background-color: rgb(108, 108, 238);
+}
+.clicked {
+    border: solid rgb(3, 3, 90);
 }
 
 .finalOutput {

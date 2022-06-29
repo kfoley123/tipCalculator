@@ -7,21 +7,28 @@ function App() {
     const [totalWithTip, setTotalWithTip] = useState(0);
     const [costPerPerson, setCostPerPerson] = useState(0);
     const tip = 10;
-    const people = 2;
+    const [numberOfPeople, setNumberOfPeople] = useState(1);
 
     function getTipAmount(bill, tip) {
-        return parseInt(bill) * (tip / 100);
+        return bill * (tip / 100);
     }
 
     function getTotalwTip(bill, tip) {
-        return getTipAmount(bill, tip) + parseInt(bill);
+        return getTipAmount(bill, tip) + bill;
+    }
+
+    function unselectAll(event) {
+        event.target.parentNode.childNodes.forEach((li) =>
+            li.classList.remove("clicked")
+        );
     }
 
     useEffect(() => {
         setTipAmount(getTipAmount(billAmount, tip));
         setTotalWithTip(getTotalwTip(billAmount, tip));
-        setCostPerPerson(totalWithTip / people);
-    }, [billAmount]);
+        let CostPerPersonFixed = totalWithTip / numberOfPeople;
+        setCostPerPerson(CostPerPersonFixed.toFixed(2));
+    }, [billAmount, tipAmount, totalWithTip, costPerPerson, numberOfPeople]);
 
     return (
         <div className="calculatorContainer">
@@ -31,7 +38,9 @@ function App() {
                 <input
                     type="text"
                     placeholder="0.00"
-                    onChange={(event) => setBillAmount(event.target.value)}
+                    onChange={(event) =>
+                        setBillAmount(parseInt(event.target.value))
+                    }
                 />
                 <div className="tipTotals">
                     <p>Tip Amount:$ {tipAmount}</p>
@@ -57,12 +66,22 @@ function App() {
                 <p>How many people are paying?</p>
 
                 <ul className="splitContainer">
-                    <li>1</li>
-                    <li>2</li>
-                    <li>3</li>
-                    <li>4</li>
-                    <li>5</li>
-                    <li>6</li>
+                    {[1, 2, 3, 4, 5, 6].map((item) => {
+                        return (
+                            <li
+                                key={item}
+                                onClick={(event) => {
+                                    setNumberOfPeople(item);
+
+                                    unselectAll(event);
+
+                                    event.target.classList.toggle("clicked");
+                                }}
+                            >
+                                {item}
+                            </li>
+                        );
+                    })}
                 </ul>
             </div>
             <div className="finalOutput">
