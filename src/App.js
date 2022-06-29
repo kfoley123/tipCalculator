@@ -6,7 +6,7 @@ function App() {
     const [tipAmount, setTipAmount] = useState(0);
     const [totalWithTip, setTotalWithTip] = useState(0);
     const [costPerPerson, setCostPerPerson] = useState(0);
-    const tip = 10;
+    const [tip, setTip] = useState(0);
     const [numberOfPeople, setNumberOfPeople] = useState(1);
 
     function getTipAmount(bill, tip) {
@@ -23,12 +23,23 @@ function App() {
         );
     }
 
+    function convertTip(tip) {
+        return parseInt(tip.slice(0, 2));
+    }
+
     useEffect(() => {
         setTipAmount(getTipAmount(billAmount, tip));
         setTotalWithTip(getTotalwTip(billAmount, tip));
         let CostPerPersonFixed = totalWithTip / numberOfPeople;
         setCostPerPerson(CostPerPersonFixed.toFixed(2));
-    }, [billAmount, tipAmount, totalWithTip, costPerPerson, numberOfPeople]);
+    }, [
+        billAmount,
+        tipAmount,
+        totalWithTip,
+        costPerPerson,
+        numberOfPeople,
+        tip,
+    ]);
 
     return (
         <div className="calculatorContainer">
@@ -54,9 +65,22 @@ function App() {
                     <div>
                         <p>Tip Amount</p>
                         <div className="tipButtons">
-                            <button>10%</button>
-                            <button>15%</button>
-                            <button>20%</button>
+                            {["10%", "15%", "20%"].map((tipPercent, i) => {
+                                return (
+                                    <button
+                                        key={i}
+                                        onClick={(event) => {
+                                            setTip(convertTip(tipPercent));
+                                            unselectAll(event);
+                                            event.target.classList.toggle(
+                                                "clicked"
+                                            );
+                                        }}
+                                    >
+                                        {tipPercent}
+                                    </button>
+                                );
+                            })}
                         </div>
                     </div>
 
