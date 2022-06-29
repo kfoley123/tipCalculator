@@ -54,9 +54,16 @@ function App() {
                     <div>
                         <p>Tip Amount</p>
                         <div className="tipButtons">
-                            <button>10%</button>
-                            <button>15%</button>
-                            <button>20%</button>
+                            {["10%", "15%", "20%"].map((tipPercent, i) => {
+                                return (
+                                    <button
+                                        key={i}
+                                        onClick={() => console.log("it works")}
+                                    >
+                                        {tipPercent}
+                                    </button>
+                                );
+                            })}
                         </div>
                     </div>
 
