@@ -6,7 +6,7 @@ function App() {
     const [tipAmount, setTipAmount] = useState(0);
     const [totalWithTip, setTotalWithTip] = useState(0);
     const [costPerPerson, setCostPerPerson] = useState(0);
-    const tip = 10;
+    const [tip, setTip] = useState(0);
     const [numberOfPeople, setNumberOfPeople] = useState(1);
 
     function getTipAmount(bill, tip) {
@@ -21,6 +21,10 @@ function App() {
         event.target.parentNode.childNodes.forEach((li) =>
             li.classList.remove("clicked")
         );
+    }
+
+    function convertTip(tip) {
+        return parseInt(tip.slice(0, 2));
     }
 
     useEffect(() => {
@@ -58,7 +62,13 @@ function App() {
                                 return (
                                     <button
                                         key={i}
-                                        onClick={() => console.log("it works")}
+                                        onClick={(event) => {
+                                            setTip(convertTip(tipPercent));
+                                            unselectAll(event);
+                                            event.target.classList.toggle(
+                                                "clicked"
+                                            );
+                                        }}
                                     >
                                         {tipPercent}
                                     </button>
