@@ -14,6 +14,11 @@
     padding: 30px;
 }
 
+.tipTotals {
+    display: flex;
+    justify-content: space-between;
+}
+
 .calculatorFunctions > input {
     height: 50px;
     width: 400px;
