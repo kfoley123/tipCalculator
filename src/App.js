@@ -8,6 +8,7 @@ function App() {
     const [costPerPerson, setCostPerPerson] = useState(0);
     const [tip, setTip] = useState(0);
     const [numberOfPeople, setNumberOfPeople] = useState(1);
+    const [dialogOpen, setDialogOpen] = useState(false);
 
     function getTipAmount(bill, tip) {
         let wholeTipAmount = bill * (tip / 100);
@@ -90,12 +91,33 @@ function App() {
                             unselectAll(
                                 event.target.parentNode.childNodes[1].childNodes
                             );
-                            console.log("itworked");
+                            setDialogOpen(true);
+
                             event.target.classList.toggle("clicked");
                         }}
                     >
-                        Custom
+                        Custom Tip
                     </button>
+                    <dialog open={dialogOpen}>
+                        <form method="dialog">
+                            <input type="text" />
+                            <button
+                                value="cancel"
+                                onClick={() => setDialogOpen(false)}
+                            >
+                                cancel
+                            </button>
+                            <button
+                                value="default"
+                                onClick={() => {
+                                    setDialogOpen(false);
+                                    setTip(30);
+                                }}
+                            >
+                                confirm
+                            </button>
+                        </form>
+                    </dialog>
                 </div>
 
                 <p>How many people are paying?</p>
