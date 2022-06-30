@@ -99,23 +99,30 @@ function App() {
                         Custom Tip
                     </button>
                     <dialog open={dialogOpen}>
+                        <h3>Custom Tip</h3>
+
                         <form method="dialog">
-                            <input type="text" />
-                            <button
-                                value="cancel"
-                                onClick={() => setDialogOpen(false)}
-                            >
-                                cancel
-                            </button>
-                            <button
-                                value="default"
-                                onClick={() => {
-                                    setDialogOpen(false);
-                                    setTip(30);
-                                }}
-                            >
-                                confirm
-                            </button>
+                            <input type="text" placeholder="%" />
+                            <div>
+                                <button
+                                    value="cancel"
+                                    onClick={() => setDialogOpen(false)}
+                                >
+                                    cancel
+                                </button>
+                                <button
+                                    value="default"
+                                    onClick={(event) => {
+                                        setDialogOpen(false);
+                                        setTip(
+                                            event.target.parentNode
+                                                .previousElementSibling.value
+                                        );
+                                    }}
+                                >
+                                    confirm
+                                </button>
+                            </div>
                         </form>
                     </dialog>
                 </div>
