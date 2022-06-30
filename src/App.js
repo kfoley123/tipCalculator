@@ -10,17 +10,17 @@ function App() {
     const [numberOfPeople, setNumberOfPeople] = useState(1);
 
     function getTipAmount(bill, tip) {
-        return bill * (tip / 100);
+        let wholeTipAmount = bill * (tip / 100);
+        let tipDecimal = wholeTipAmount.toFixed(2);
+        return parseInt(tipDecimal); // not working
     }
 
     function getTotalwTip(bill, tip) {
-        return getTipAmount(bill, tip) + bill;
+        return getTipAmount(bill, tip) + parseInt(bill);
     }
 
-    function unselectAll(event) {
-        event.target.parentNode.childNodes.forEach((li) =>
-            li.classList.remove("clicked")
-        );
+    function unselectAll(childNodes) {
+        childNodes.forEach((li) => li.classList.remove("clicked"));
     }
 
     function convertTip(tip) {
@@ -62,29 +62,40 @@ function App() {
                 </div>
 
                 <div>
-                    <div>
-                        <p>Tip Amount</p>
-                        <div className="tipButtons">
-                            {["10%", "15%", "20%"].map((tipPercent, i) => {
-                                return (
-                                    <button
-                                        key={i}
-                                        onClick={(event) => {
-                                            setTip(convertTip(tipPercent));
-                                            unselectAll(event);
-                                            event.target.classList.toggle(
-                                                "clicked"
-                                            );
-                                        }}
-                                    >
-                                        {tipPercent}
-                                    </button>
-                                );
-                            })}
-                        </div>
-                    </div>
+                    <p>Tip Amount</p>
+                    <div className="tipButtons">
+                        {["10%", "15%", "20%"].map((tipPercent, i) => {
+                            return (
+                                <button
+                                    key={i}
+                                    onClick={(event) => {
+                                        setTip(convertTip(tipPercent));
 
-                    <button className="customTipButton">Custom</button>
+                                        unselectAll(
+                                            event.target.parentNode.childNodes
+                                        );
+                                        event.target.classList.toggle(
+                                            "clicked"
+                                        );
+                                    }}
+                                >
+                                    {tipPercent}
+                                </button>
+                            );
+                        })}
+                    </div>
+                    <button
+                        className="customTipButton"
+                        onClick={(event) => {
+                            unselectAll(
+                                event.target.parentNode.childNodes[1].childNodes
+                            );
+                            console.log("itworked");
+                            event.target.classList.toggle("clicked");
+                        }}
+                    >
+                        Custom
+                    </button>
                 </div>
 
                 <p>How many people are paying?</p>
@@ -96,8 +107,11 @@ function App() {
                                 key={item}
                                 onClick={(event) => {
                                     setNumberOfPeople(item);
+                                    console.log(event);
 
-                                    unselectAll(event);
+                                    unselectAll(
+                                        event.target.parentNode.childNodes
+                                    );
 
                                     event.target.classList.toggle("clicked");
                                 }}
