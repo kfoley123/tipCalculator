@@ -1,7 +1,8 @@
 import "./App.css";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 
 function App() {
+    const tipTotalsDiv = useRef(null);
     const [billAmount, setBillAmount] = useState(0);
     const [tipAmount, setTipAmount] = useState(0);
     const [totalWithTip, setTotalWithTip] = useState(0);
@@ -9,15 +10,17 @@ function App() {
     const [tip, setTip] = useState(0);
     const [numberOfPeople, setNumberOfPeople] = useState(1);
     const [dialogOpen, setDialogOpen] = useState(false);
+    const [customTip, setCustomTip] = useState(false);
 
     function getTipAmount(bill, tip) {
         let wholeTipAmount = bill * (tip / 100);
         let tipDecimal = wholeTipAmount.toFixed(2);
-        return parseInt(tipDecimal); // not working
+        return parseFloat(tipDecimal);
     }
 
     function getTotalwTip(bill, tip) {
-        return getTipAmount(bill, tip) + parseInt(bill);
+        let totalwTipNum = getTipAmount(bill, tip) + parseFloat(bill);
+        return totalwTipNum.toFixed(2);
     }
 
     function unselectAll(childNodes) {
@@ -25,7 +28,7 @@ function App() {
     }
 
     function convertTip(tip) {
-        return parseInt(tip.slice(0, 2));
+        return parseFloat(tip.slice(0, 2));
     }
 
     useEffect(() => {
@@ -33,6 +36,17 @@ function App() {
         setTotalWithTip(getTotalwTip(billAmount, tip));
         let CostPerPersonFixed = totalWithTip / numberOfPeople;
         setCostPerPerson(CostPerPersonFixed.toFixed(2));
+
+        console.log(billAmount);
+        if (
+            billAmount > 0 &&
+            tipTotalsDiv.current.classList.contains("hidden")
+        ) {
+            tipTotalsDiv.current.classList.remove("hidden");
+        }
+        if (billAmount == 0 || billAmount === undefined) {
+            tipTotalsDiv.current.classList.add("hidden");
+        }
     }, [
         billAmount,
         tipAmount,
@@ -50,11 +64,14 @@ function App() {
                 <input
                     type="text"
                     placeholder="0.00"
-                    onChange={(event) =>
-                        setBillAmount(parseInt(event.target.value))
-                    }
+                    onChange={(event) => {
+                        if (isNaN(event.target.value)) {
+                            setBillAmount(0);
+                        }
+                        setBillAmount(parseFloat(event.target.value));
+                    }}
                 />
-                <div className="tipTotals">
+                <div className="tipTotals hidden" ref={tipTotalsDiv}>
                     <p>Tip Amount:$ {tipAmount}</p>
                     <p>
                         Total with Tip:$
@@ -71,6 +88,7 @@ function App() {
                                     key={i}
                                     onClick={(event) => {
                                         setTip(convertTip(tipPercent));
+                                        setCustomTip(false);
 
                                         unselectAll(
                                             event.target.parentNode.childNodes
@@ -96,7 +114,7 @@ function App() {
                             event.target.classList.toggle("clicked");
                         }}
                     >
-                        Custom Tip
+                        Custom Tip {customTip && tip}
                     </button>
                     <dialog open={dialogOpen}>
                         <h3>Custom Tip</h3>
@@ -114,6 +132,7 @@ function App() {
                                     value="default"
                                     onClick={(event) => {
                                         setDialogOpen(false);
+                                        setCustomTip(true);
                                         setTip(
                                             event.target.parentNode
                                                 .previousElementSibling.value
