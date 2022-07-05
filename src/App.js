@@ -37,7 +37,6 @@ function App() {
         let CostPerPersonFixed = totalWithTip / numberOfPeople;
         setCostPerPerson(CostPerPersonFixed.toFixed(2));
 
-        console.log(billAmount);
         if (
             billAmount > 0 &&
             tipTotalsDiv.current.classList.contains("hidden")
@@ -155,7 +154,6 @@ function App() {
                                 key={item}
                                 onClick={(event) => {
                                     setNumberOfPeople(item);
-                                    console.log(event);
 
                                     unselectAll(
                                         event.target.parentNode.childNodes
