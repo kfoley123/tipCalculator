@@ -1,5 +1,6 @@
 import "./App.css";
 import React, { useEffect, useState, useRef } from "react";
+import cs from "classnames";
 
 function App() {
     const tipTotalsDiv = useRef(null);
@@ -23,10 +24,6 @@ function App() {
         return totalwTipNum.toFixed(2);
     }
 
-    function unselectAll(childNodes) {
-        childNodes.forEach((li) => li.classList.remove("clicked"));
-    }
-
     function convertTip(tip) {
         return parseFloat(tip.slice(0, 2));
     }
@@ -36,16 +33,6 @@ function App() {
         setTotalWithTip(getTotalwTip(billAmount, tip));
         let CostPerPersonFixed = totalWithTip / numberOfPeople;
         setCostPerPerson(CostPerPersonFixed.toFixed(2));
-
-        if (
-            billAmount > 0 &&
-            tipTotalsDiv.current.classList.contains("hidden")
-        ) {
-            tipTotalsDiv.current.classList.remove("hidden");
-        }
-        if (billAmount == 0 || billAmount === undefined) {
-            tipTotalsDiv.current.classList.add("hidden");
-        }
     }, [
         billAmount,
         tipAmount,
@@ -53,6 +40,7 @@ function App() {
         costPerPerson,
         numberOfPeople,
         tip,
+        getTotalwTip,
     ]);
 
     return (
@@ -70,7 +58,10 @@ function App() {
                         setBillAmount(parseFloat(event.target.value));
                     }}
                 />
-                <div className="tipTotals hidden" ref={tipTotalsDiv}>
+                <div
+                    className={cs("tipTotals", { hidden: billAmount > 0 })}
+                    ref={tipTotalsDiv}
+                >
                     <p>Tip Amount:$ {tipAmount}</p>
                     <p>
                         Total with Tip:$
@@ -84,17 +75,15 @@ function App() {
                         {["10%", "15%", "20%"].map((tipPercent, i) => {
                             return (
                                 <button
+                                    className={cs({
+                                        clicked:
+                                            convertTip(tipPercent) === tip &&
+                                            !customTip,
+                                    })}
                                     key={i}
                                     onClick={(event) => {
                                         setTip(convertTip(tipPercent));
                                         setCustomTip(false);
-
-                                        unselectAll(
-                                            event.target.parentNode.childNodes
-                                        );
-                                        event.target.classList.toggle(
-                                            "clicked"
-                                        );
                                     }}
                                 >
                                     {tipPercent}
@@ -103,14 +92,11 @@ function App() {
                         })}
                     </div>
                     <button
-                        className="customTipButton"
+                        className={cs("customTipButton", {
+                            clicked: customTip,
+                        })}
                         onClick={(event) => {
-                            unselectAll(
-                                event.target.parentNode.childNodes[1].childNodes
-                            );
                             setDialogOpen(true);
-
-                            event.target.classList.toggle("clicked");
                         }}
                     >
                         Custom Tip {customTip && tip}
@@ -151,15 +137,12 @@ function App() {
                     {[1, 2, 3, 4, 5, 6].map((item) => {
                         return (
                             <li
+                                className={cs({
+                                    clicked: numberOfPeople === item,
+                                })}
                                 key={item}
                                 onClick={(event) => {
                                     setNumberOfPeople(item);
-
-                                    unselectAll(
-                                        event.target.parentNode.childNodes
-                                    );
-
-                                    event.target.classList.toggle("clicked");
                                 }}
                             >
                                 {item}
