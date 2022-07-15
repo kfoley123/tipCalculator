@@ -6,23 +6,23 @@ export default function TipSplit(props) {
         <>
             <p>How many people are paying?</p>
 
-            <ul className="splitContainer">
+            <div className="splitContainer">
                 {props.totalPeople.map((item) => {
                     return (
-                        <li
+                        <button
+                            name="numberOfPeople"
+                            value={item}
                             className={cs({
                                 clicked: props.numberOfPeople === item,
                             })}
                             key={item}
-                            onClick={(event) => {
-                                props.setNumberOfPeople(item);
-                            }}
+                            onClick={props.handleFormData}
                         >
                             {item}
-                        </li>
+                        </button>
                     );
                 })}
-            </ul>
+            </div>
         </>
     );
 }

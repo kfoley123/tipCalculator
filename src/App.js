@@ -16,10 +16,14 @@ function App() {
     });
 
     function handleFormData(event) {
+        console.log(event);
         //     if (event.target.value === "") {
         //         setBillAmount(0);
         //     } else setBillAmount(parseFloat(event.target.value));
         // }
+
+        // setCustomTip(false);
+
         setFormData((prevFormData) => {
             return {
                 ...prevFormData,
@@ -31,8 +35,6 @@ function App() {
     const [tipAmount, setTipAmount] = useState(0);
     const [totalWithTip, setTotalWithTip] = useState(0);
     const [costPerPerson, setCostPerPerson] = useState(0);
-    const [tip, setTip] = useState(0);
-    const [numberOfPeople, setNumberOfPeople] = useState(1);
     const [dialogOpen, setDialogOpen] = useState(false);
     const [customTip, setCustomTip] = useState(false);
 
@@ -45,16 +47,16 @@ function App() {
     }
 
     useEffect(() => {
-        setTipAmount(getTipAmount(formData.billAmount, tip));
+        setTipAmount(getTipAmount(formData.billAmount, formData.tip));
 
         let totalwTipNum =
-            getTipAmount(formData.billAmount, tip) +
+            getTipAmount(formData.billAmount, formData.tip) +
             parseFloat(formData.billAmount);
         setTotalWithTip(totalwTipNum.toFixed(2));
 
-        let CostPerPersonFixed = totalWithTip / numberOfPeople;
+        let CostPerPersonFixed = totalWithTip / formData.numberOfPeople;
         setCostPerPerson(CostPerPersonFixed.toFixed(2));
-    }, [formData, tipAmount, totalWithTip, costPerPerson, numberOfPeople, tip]);
+    }, [formData, tipAmount, totalWithTip, costPerPerson]);
 
     return (
         <div className="calculatorContainer">
@@ -69,22 +71,22 @@ function App() {
 
                 <TipButtons
                     customTip={customTip}
-                    tip={tip}
-                    setTip={setTip}
-                    setCustomTip={setCustomTip}
+                    tip={formData.tip}
+                    handleFormData={handleFormData}
                 />
+
                 <CustomTip
                     dialogOpen={dialogOpen}
                     setDialogOpen={setDialogOpen}
                     customTip={customTip}
-                    tip={tip}
-                    setTip={setTip}
+                    tip={formData.tip}
+                    handleFormData={handleFormData}
                     setCustomTip={setCustomTip}
                 />
 
                 <TipSplit
-                    numberOfPeople={numberOfPeople}
-                    setNumberOfPeople={setNumberOfPeople}
+                    numberOfPeople={formData.numberOfPeople}
+                    handleFormData={handleFormData}
                     totalPeople={totalPeople}
                 />
             </div>
