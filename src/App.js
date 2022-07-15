@@ -16,12 +16,7 @@ function App() {
     });
 
     function handleFormData(event) {
-        console.log(event);
-        //     if (event.target.value === "") {
-        //         setBillAmount(0);
-        //     } else setBillAmount(parseFloat(event.target.value));
-        // }
-
+        //custom tip button
         if (event.target.value === "default") {
             setFormData((prevFormData) => {
                 return {
@@ -35,14 +30,14 @@ function App() {
                 return {
                     ...prevFormData,
                     customTip: false,
-                    tip: event.target.value,
+                    tip: parseInt(event.target.value),
                 };
             });
         } else {
             setFormData((prevFormData) => {
                 return {
                     ...prevFormData,
-                    [event.target.name]: event.target.value,
+                    [event.target.name]: parseFloat(event.target.value, 2),
                 };
             });
         }
@@ -51,7 +46,6 @@ function App() {
     const [tipAmount, setTipAmount] = useState(0);
     const [totalWithTip, setTotalWithTip] = useState(0);
     const [costPerPerson, setCostPerPerson] = useState(0);
-    // const [customTip, setCustomTip] = useState(false);
 
     let totalPeople = [1, 2, 3, 4, 5, 6];
 
