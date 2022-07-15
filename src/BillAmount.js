@@ -6,13 +6,10 @@ export default function BillAmount(props) {
             <p>Bill Amount</p>
 
             <input
+                name="billAmount"
                 type="text"
                 placeholder="0.00"
-                onChange={(event) => {
-                    if (event.target.value === "") {
-                        props.setBillAmount(0);
-                    } else props.setBillAmount(parseFloat(event.target.value));
-                }}
+                onChange={props.handleFormData}
             />
         </>
     );

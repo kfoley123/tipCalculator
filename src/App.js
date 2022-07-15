@@ -8,7 +8,26 @@ import TipTotals from "./TipTotals";
 import BillAmount from "./BillAmount";
 
 function App() {
-    const [billAmount, setBillAmount] = useState(0);
+    const [formData, setFormData] = useState({
+        billAmount: 0,
+        tip: 0,
+        customTip: false,
+        numberOfPeople: 0,
+    });
+
+    function handleFormData(event) {
+        //     if (event.target.value === "") {
+        //         setBillAmount(0);
+        //     } else setBillAmount(parseFloat(event.target.value));
+        // }
+        setFormData((prevFormData) => {
+            return {
+                ...prevFormData,
+                [event.target.name]: event.target.value,
+            };
+        });
+    }
+
     const [tipAmount, setTipAmount] = useState(0);
     const [totalWithTip, setTotalWithTip] = useState(0);
     const [costPerPerson, setCostPerPerson] = useState(0);
@@ -26,29 +45,24 @@ function App() {
     }
 
     useEffect(() => {
-        setTipAmount(getTipAmount(billAmount, tip));
+        setTipAmount(getTipAmount(formData.billAmount, tip));
 
         let totalwTipNum =
-            getTipAmount(billAmount, tip) + parseFloat(billAmount);
+            getTipAmount(formData.billAmount, tip) +
+            parseFloat(formData.billAmount);
         setTotalWithTip(totalwTipNum.toFixed(2));
 
         let CostPerPersonFixed = totalWithTip / numberOfPeople;
         setCostPerPerson(CostPerPersonFixed.toFixed(2));
-    }, [
-        billAmount,
-        tipAmount,
-        totalWithTip,
-        costPerPerson,
-        numberOfPeople,
-        tip,
-    ]);
+    }, [formData, tipAmount, totalWithTip, costPerPerson, numberOfPeople, tip]);
 
     return (
         <div className="calculatorContainer">
             <div className="calculatorFunctions">
-                <BillAmount setBillAmount={setBillAmount} />
+                <BillAmount handleFormData={handleFormData} />
+
                 <TipTotals
-                    billamount={billAmount}
+                    billAmount={formData.billAmount}
                     totalWithTip={totalWithTip}
                     tipAmount={tipAmount}
                 />
