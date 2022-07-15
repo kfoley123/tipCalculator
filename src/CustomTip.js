@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 import cs from "classnames";
 
 export default function CustomTip(props) {
+    const [dialogOpen, setDialogOpen] = useState(false);
     return (
         <>
             <button
@@ -9,12 +10,12 @@ export default function CustomTip(props) {
                     clicked: props.customTip,
                 })}
                 onClick={() => {
-                    props.setDialogOpen(true);
+                    setDialogOpen(true);
                 }}
             >
                 Custom Tip {props.customTip && props.tip}%
             </button>
-            <dialog open={props.dialogOpen}>
+            <dialog open={dialogOpen}>
                 <h3>Custom Tip</h3>
 
                 <form method="dialog">
@@ -22,19 +23,16 @@ export default function CustomTip(props) {
                     <div>
                         <button
                             value="cancel"
-                            onClick={() => props.setDialogOpen(false)}
+                            onClick={() => setDialogOpen(false)}
                         >
                             cancel
                         </button>
                         <button
+                            name="customTip"
                             value="default"
                             onClick={(event) => {
-                                props.setDialogOpen(false);
-                                props.setCustomTip(true);
-                                props.setTip(
-                                    event.target.parentNode
-                                        .previousElementSibling.value
-                                );
+                                setDialogOpen(false);
+                                props.handleFormData(event);
                             }}
                         >
                             confirm

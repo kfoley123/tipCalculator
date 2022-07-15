@@ -12,7 +12,7 @@ function App() {
         billAmount: 0,
         tip: 0,
         customTip: false,
-        numberOfPeople: 0,
+        numberOfPeople: 1,
     });
 
     function handleFormData(event) {
@@ -22,21 +22,36 @@ function App() {
         //     } else setBillAmount(parseFloat(event.target.value));
         // }
 
-        // setCustomTip(false);
-
-        setFormData((prevFormData) => {
-            return {
-                ...prevFormData,
-                [event.target.name]: event.target.value,
-            };
-        });
+        if (event.target.value === "default") {
+            setFormData((prevFormData) => {
+                return {
+                    ...prevFormData,
+                    customTip: true,
+                    tip: event.target.parentNode.previousElementSibling.value,
+                };
+            });
+        } else if (event.target.name === "tip") {
+            setFormData((prevFormData) => {
+                return {
+                    ...prevFormData,
+                    customTip: false,
+                    tip: event.target.value,
+                };
+            });
+        } else {
+            setFormData((prevFormData) => {
+                return {
+                    ...prevFormData,
+                    [event.target.name]: event.target.value,
+                };
+            });
+        }
     }
 
     const [tipAmount, setTipAmount] = useState(0);
     const [totalWithTip, setTotalWithTip] = useState(0);
     const [costPerPerson, setCostPerPerson] = useState(0);
-    const [dialogOpen, setDialogOpen] = useState(false);
-    const [customTip, setCustomTip] = useState(false);
+    // const [customTip, setCustomTip] = useState(false);
 
     let totalPeople = [1, 2, 3, 4, 5, 6];
 
@@ -70,18 +85,15 @@ function App() {
                 />
 
                 <TipButtons
-                    customTip={customTip}
+                    customTip={formData.customTip}
                     tip={formData.tip}
                     handleFormData={handleFormData}
                 />
 
                 <CustomTip
-                    dialogOpen={dialogOpen}
-                    setDialogOpen={setDialogOpen}
-                    customTip={customTip}
+                    customTip={formData.customTip}
                     tip={formData.tip}
                     handleFormData={handleFormData}
-                    setCustomTip={setCustomTip}
                 />
 
                 <TipSplit
