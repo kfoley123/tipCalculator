@@ -16,8 +16,7 @@ function App() {
     });
 
     function handleFormData(event) {
-        //custom tip button
-        if (event.target.value === "default") {
+        if (event.target.name === "customTip") {
             setFormData((prevFormData) => {
                 return {
                     ...prevFormData,
@@ -51,16 +50,13 @@ function App() {
 
     function getTipAmount(bill, tip) {
         let wholeTipAmount = bill * (tip / 100);
-        let tipDecimal = wholeTipAmount.toFixed(2);
-        return parseFloat(tipDecimal);
+        return parseFloat(wholeTipAmount.toFixed(2));
     }
 
     useEffect(() => {
         setTipAmount(getTipAmount(formData.billAmount, formData.tip));
 
-        let totalwTipNum =
-            getTipAmount(formData.billAmount, formData.tip) +
-            parseFloat(formData.billAmount);
+        let totalwTipNum = tipAmount + parseFloat(formData.billAmount);
         setTotalWithTip(totalwTipNum.toFixed(2));
 
         let CostPerPersonFixed = totalWithTip / formData.numberOfPeople;
