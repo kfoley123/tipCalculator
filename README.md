@@ -22,9 +22,9 @@ Kortney Foley
 
 ## Description
 
-The purpose of this app is to show hoe much each person in a party owes given a specific bill and tip amount. Bill can be split by up to 6 people and the tip can be chosen from 10%, 15%, 20% or a custom amount.
+The purpose of this app is to show how much each person in a party owes given a specific bill and tip amount. Bill can be split by up to 6 people and the tip can be chosen from 10%, 15%, 20% or a custom amount.
 
-I created this app to practise using useState as well as classnames in React.
+I created this app to practise using the useState hook as well as the classnames package in React.
 
 ---
 
