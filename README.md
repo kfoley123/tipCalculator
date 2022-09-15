@@ -1,4 +1,4 @@
-# _Anime Finder App_
+# _Tip Split Calulator_
 
 An app that splits a selected bill and tip amount among a given number of people.
 
